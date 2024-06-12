@@ -1,0 +1,57 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Complaint {
+  complaintCreationTime DateTime?
+  complaintStatus       EnumComplaintComplaintStatus?
+  complaintStatusOption EnumComplaintComplaintStatusOption?
+  createdAt             DateTime                            @default(now())
+  creationTime          DateTime?
+  creationTimestamp     DateTime?
+  id                    String                              @id @default(cuid())
+  location              Location?                           @relation(fields: [locationId], references: [id])
+  locationId            String?
+  status                EnumComplaintStatus?
+  statusOfComplaint     EnumComplaintStatusOfComplaint?
+  updatedAt             DateTime                            @updatedAt
+}
+
+model Location {
+  bandwidth       Int?
+  complaints      Complaint[]
+  createdAt       DateTime            @default(now())
+  id              String              @id @default(cuid())
+  name            String?
+  registeredEmail String?
+  routerIp        String?
+  status          EnumLocationStatus?
+  statusSince     DateTime?
+  updatedAt       DateTime            @updatedAt
+  wanIp           String?
+}
+
+enum EnumComplaintComplaintStatus {
+  Option1
+}
+
+enum EnumComplaintComplaintStatusOption {
+  Option1
+}
+
+enum EnumComplaintStatus {
+  Option1
+}
+
+enum EnumComplaintStatusOfComplaint {
+  Option1
+}
+
+enum EnumLocationStatus {
+  Option1
+}
